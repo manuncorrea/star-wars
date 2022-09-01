@@ -1,9 +1,13 @@
+import { useState } from "react";
+
 import { Link } from "react-router-dom";
-import styles from './Header.module.css';
 import { Button, Container, Modal, Nav, Navbar, NavItem } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from "react";
+
 import { SignIn } from "../../pages/SignIn";
+import { SignUp } from "../../pages/SignUp";
+
+import styles from './Header.module.css';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -12,36 +16,37 @@ export function Header() {
 
   const handleClose = () => setIsVisibleModal(false);
   const handleOpenModal = () => setIsVisibleModal(true);
+  const handleOpenModalSignUp = () => setIsVisibleModal(true);
 
-   return (
+  const teste = "verde"
+
+
+  return (
     <>
-      <Navbar className={styles.header}  variant="dark">
+      <Navbar className={styles.header} variant="dark">
         <Container >
           <Navbar.Collapse>
             <Navbar.Brand href="#home">
               <img src={logoImg} alt="" />
             </Navbar.Brand>
             <Nav className="mr-auto">
-            <NavItem>
-                <Nav.Link className={styles.menu} as={Link} to="/" >Personages</Nav.Link>
-              </NavItem>
               <NavItem>
-                <Nav.Link className={styles.menu} as={Link} to="/armas" >Armas</Nav.Link>
+                <Nav.Link className={styles.menu} as={Link} to="/" >Personages</Nav.Link>
               </NavItem>
               <NavItem>
                 <Nav.Link className={styles.menu} as={Link} to="/nave-espacial" >Naves Espacial</Nav.Link>
               </NavItem>
             </Nav>
           </Navbar.Collapse>
-          <Button onClick={handleOpenModal} variant="outline-warning">Login</Button>
+          <div>
+            <Button id="login" onClick={handleOpenModal} variant="outline-warning">Login</Button> {' '}
+            <Button id="cadastart" onClick={handleOpenModalSignUp} variant="warning">Cadastrar</Button>
+          </div>
         </Container>
       </Navbar>
 
       <Modal show={isVisibleModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <SignIn />
+        <SignUp />
       </Modal>
     </>
   );

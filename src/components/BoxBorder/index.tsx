@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 interface BoxBorderProps {
   children: ReactNode
-}
+};
 
 export function BoxBorder({ children }: BoxBorderProps) {
   return (
@@ -12,6 +12,6 @@ export function BoxBorder({ children }: BoxBorderProps) {
       </div>
     </section>
   )
-}
+};
 
 

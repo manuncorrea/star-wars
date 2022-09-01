@@ -5,6 +5,9 @@ export function SignUp() {
   return (
     <>
       <Modal.Body>
+        <Modal.Header closeButton>
+          <Modal.Title>Cadastrar</Modal.Title>
+        </Modal.Header>
         <Form>
           <Input type="name" placeholder="Nome" />
           <Input type="email" placeholder="E-mail" />

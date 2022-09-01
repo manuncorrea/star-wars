@@ -6,6 +6,9 @@ import { api } from '../../services/api';
 
 export function Characters() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [selectedCharacterData, setSelectedCharacterData] = useState<CharactersProps>();
   const [charactersData, setCharactersData] = useState<Array<CharactersProps>>(
     [] as Array<CharactersProps>
   );
@@ -20,16 +23,32 @@ export function Characters() {
 
   const fetchCharacters = useCallback(async () => {
     try {
-      const {data} = await api.get(`/people`);
+      const { data } = await api.get(`/people`);
       setCharactersData(data.results)
     } catch (error) {
       console.error(error)
     }
   }, []);
 
+  const fetchCharactersDetalies = async (url: string) => {
+    setIsLoading(true);
+    try {
+      const { data } = await api.get(url);
+      setSelectedCharacterData(data);
+    } catch (error) {
+      console.error(error);
+    }finally {
+      setIsLoading(false);
+    }
+  };
+
+  console.log(selectedCharacterData)
    
   const handleClose = () => setIsModalVisible(false);
-  const handleOpenModal = () => setIsModalVisible(true);
+  const handleOpenModal = (url: string) => {
+    fetchCharactersDetalies(url);
+    setIsModalVisible(true);
+  };
 
   return (
     <Container>
@@ -41,7 +60,7 @@ export function Characters() {
                 <Card style={{ width: '18rem' }}>
                   <Card.Body>
                     <Card.Title>{characters.name}</Card.Title>
-                    <Button onClick={handleOpenModal} variant="primary">Detalhes</Button>
+                    <Button onClick={() => handleOpenModal(characters.url)} variant="primary">Detalhes</Button>
                   </Card.Body>
                 </Card>
               </div>
@@ -53,6 +72,38 @@ export function Characters() {
           <Modal.Header closeButton>
             <Modal.Title>Detalhes</Modal.Title>
           </Modal.Header>
+          <Modal.Body>
+            {isLoading ? ('loading') : (
+              <div>
+                <div className="d-flex flex-row">
+                  <h5>Nome: </h5>
+                  <span>{selectedCharacterData?.name}</span>
+                </div>
+                <div className="d-flex flex-row">
+                  <h5>Cor do cabelo: </h5>
+                  <span>
+                    {selectedCharacterData?.hair_color ? 
+                      selectedCharacterData?.hair_color : ""}
+                  </span>
+                </div>
+                <div className="d-flex flex-row">
+                  <h5>Cor da pele: </h5>
+                  <span>
+                  {selectedCharacterData?.skin_color ? 
+                    selectedCharacterData?.skin_color : ""}
+                  </span>
+                </div>
+                <div className="d-flex flex-row">
+                  <h5>Sexo: </h5>
+                  <span>
+
+                  {selectedCharacterData?.gender ? 
+                    selectedCharacterData?.gender : ""}
+                  </span>
+                </div>
+              </div>
+            )}
+          </Modal.Body>
         </Modal>
       </BoxBorder>
     </Container>
