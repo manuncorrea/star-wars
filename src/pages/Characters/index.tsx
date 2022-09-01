@@ -27,6 +27,7 @@ export function Characters() {
     }
   }, []);
 
+   
   const handleClose = () => setIsModalVisible(false);
   const handleOpenModal = () => setIsModalVisible(true);
 

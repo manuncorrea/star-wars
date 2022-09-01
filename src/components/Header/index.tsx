@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from "react";
 import { SignIn } from "../../pages/SignIn";
 
+import logoImg from '../../assets/logo.svg';
+
 export function Header() {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
@@ -16,20 +18,22 @@ export function Header() {
       <Navbar className={styles.header}  variant="dark">
         <Container >
           <Navbar.Collapse>
-            <Navbar.Brand href="#home">Star-Wars</Navbar.Brand>
+            <Navbar.Brand href="#home">
+              <img src={logoImg} alt="" />
+            </Navbar.Brand>
             <Nav className="mr-auto">
             <NavItem>
-                <Nav.Link as={Link} to="/" >Personages</Nav.Link>
+                <Nav.Link className={styles.menu} as={Link} to="/" >Personages</Nav.Link>
               </NavItem>
               <NavItem>
-                <Nav.Link as={Link} to="/armas" >Armas</Nav.Link>
+                <Nav.Link className={styles.menu} as={Link} to="/armas" >Armas</Nav.Link>
               </NavItem>
               <NavItem>
-                <Nav.Link as={Link} to="/nave-espacial" >Naves Espacial</Nav.Link>
+                <Nav.Link className={styles.menu} as={Link} to="/nave-espacial" >Naves Espacial</Nav.Link>
               </NavItem>
             </Nav>
           </Navbar.Collapse>
-          <Button onClick={handleOpenModal} variant="outline-primary">Login</Button>
+          <Button onClick={handleOpenModal} variant="outline-warning">Login</Button>
         </Container>
       </Navbar>
 
