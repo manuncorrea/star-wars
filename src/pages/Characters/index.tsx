@@ -1,28 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Card, Container, Modal } from "react-bootstrap";
 import { BoxBorder } from "../../components/BoxBorder";
-
-interface CharactersProps {
-  name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  birth_year: string;
-  gender: string;
-  homeworld: string;
-  films: Array<string>;
-  species: Array<string>;
-  vehicles: Array<string>;
-  starships: Array<string>;
-  created: string;
-  edited: string;
-  url: string;
-}
+import { CharactersProps } from "../../utils/types";
+import { api } from '../../services/api';
 
 export function Characters() {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [charactersData, setCharactersData] = useState<Array<CharactersProps>>(
     [] as Array<CharactersProps>
@@ -34,42 +16,44 @@ export function Characters() {
 
   async function handleCharacters() {
     await fetchCharacters();
-  }
+  };
 
-  async function fetchCharacters() {
-    fetch(`https://swapi.dev/api/people/`)
-      .then((response) => response.json())
-      .then((data) => setCharactersData(data.results));
-  }
+  const fetchCharacters = useCallback(async () => {
+    try {
+      const {data} = await api.get(`/people`);
+      setCharactersData(data.results)
+    } catch (error) {
+      console.error(error)
+    }
+  }, []);
 
   const handleClose = () => setIsModalVisible(false);
   const handleOpenModal = () => setIsModalVisible(true);
 
-  return charactersData.map((character) => (
+  return (
     <Container>
       <BoxBorder>
-        <>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>{character.name}</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button onClick={handleOpenModal} variant="primary">Detalhes</Button>
-            </Card.Body>
-          </Card>
-        </>
+        {
+          charactersData.map((characters) => {
+            return (
+              <div className="col-11 col-md-6 col-lg-3 mx-0 mb-4">
+                <Card style={{ width: '18rem' }}>
+                  <Card.Body>
+                    <Card.Title>{characters.name}</Card.Title>
+                    <Button onClick={handleOpenModal} variant="primary">Detalhes</Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            )
+          })
+        }
 
+        <Modal show={isModalVisible} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Detalhes</Modal.Title>
+          </Modal.Header>
+        </Modal>
       </BoxBorder>
-
-
-      <Modal show={isModalVisible} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Detalhes do personagem</Modal.Title>
-        </Modal.Header>
-      </Modal>
-
     </Container>
-  ));
+  );
 }
