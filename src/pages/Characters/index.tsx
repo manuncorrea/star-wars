@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
-import { Button, Card, Container, Modal } from "react-bootstrap";
-import { BoxBorder } from "../../components/BoxBorder";
-import { CharactersProps } from "../../utils/types";
+import { useCallback, useEffect, useState } from 'react';
+import { Button, Card, Container, Modal } from 'react-bootstrap';
+import { BoxBorder } from '../../components/BoxBorder';
+import { CharactersProps } from '../../utils/types';
 import { api } from '../../services/api';
 
 export function Characters() {
@@ -42,8 +42,6 @@ export function Characters() {
     }
   };
 
-  console.log(selectedCharacterData)
-   
   const handleClose = () => setIsModalVisible(false);
   const handleOpenModal = (url: string) => {
     fetchCharactersDetalies(url);
@@ -56,11 +54,11 @@ export function Characters() {
         {
           charactersData.map((characters) => {
             return (
-              <div className="col-11 col-md-6 col-lg-3 mx-0 mb-4">
-                <Card style={{ width: '18rem' }}>
+              <div className='col-11 col-md-6 col-lg-3 mx-0 mb-4'>
+                <Card style={{ width: '18rem', background: '#0e0c1a' }}>
                   <Card.Body>
-                    <Card.Title>{characters.name}</Card.Title>
-                    <Button onClick={() => handleOpenModal(characters.url)} variant="primary">Detalhes</Button>
+                    <Card.Title style={{ color: '#ffffff8c', fontWeight: 'bold', fontFamily: 'Inter' }}>{characters.name}</Card.Title>
+                    <Button onClick={() => handleOpenModal(characters.url)} variant='warning'>Detalhes</Button>
                   </Card.Body>
                 </Card>
               </div>
@@ -75,37 +73,39 @@ export function Characters() {
           <Modal.Body>
             {isLoading ? ('loading') : (
               <div>
-                <div className="d-flex flex-row">
-                  <h5>Nome: </h5>
+                <div className='d-flex flex-row'>
+                  <h5>Nome:</h5>
                   <span>{selectedCharacterData?.name}</span>
                 </div>
-                <div className="d-flex flex-row">
+                <div className='d-flex flex-row'>
                   <h5>Cor do cabelo: </h5>
                   <span>
                     {selectedCharacterData?.hair_color ? 
-                      selectedCharacterData?.hair_color : ""}
+                      selectedCharacterData?.hair_color : ''}
                   </span>
                 </div>
-                <div className="d-flex flex-row">
+                <div className='d-flex flex-row'>
                   <h5>Cor da pele: </h5>
                   <span>
                   {selectedCharacterData?.skin_color ? 
-                    selectedCharacterData?.skin_color : ""}
+                    selectedCharacterData?.skin_color : ''}
                   </span>
                 </div>
-                <div className="d-flex flex-row">
+                <div className='d-flex flex-row'>
                   <h5>Sexo: </h5>
                   <span>
 
                   {selectedCharacterData?.gender ? 
-                    selectedCharacterData?.gender : ""}
+                    selectedCharacterData?.gender : ''}
                   </span>
                 </div>
               </div>
+
+              
             )}
           </Modal.Body>
         </Modal>
       </BoxBorder>
     </Container>
   );
-}
+};
