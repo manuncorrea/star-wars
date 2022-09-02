@@ -3,6 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react';
 interface ContextProps {
   children: ReactNode
 }
+
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: ContextProps) => {
@@ -11,6 +12,7 @@ export const AuthProvider = ({ children }: ContextProps) => {
   useEffect(() => {
     const userToken = localStorage.getItem('user_token');
     const usersStorage = localStorage.getItem('users_bd');
+
 
     if (userToken && usersStorage) {
       const hasUser = JSON.parse(usersStorage)?.filter(
