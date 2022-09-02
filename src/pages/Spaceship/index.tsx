@@ -3,8 +3,9 @@ import { Button, Card, Container, Modal } from 'react-bootstrap';
 import { BoxBorder } from '../../components/BoxBorder';
 import { SpaceshipProps } from '../../utils/types';
 import { api } from '../../services/api';
+import LoadingIcons from 'react-loading-icons'
 
-import styles  from './Spaceship.module.css';
+import useAuth from '../../hooks/useAuth';
 
 export function Spaceships() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -14,7 +15,7 @@ export function Spaceships() {
   const [spaceshipData, setSpaceshipData] = useState<Array<SpaceshipProps>>(
     [] as Array<SpaceshipProps>
   );
-  
+
   useEffect(() => {
     handleSpaceship();
   });
@@ -36,7 +37,7 @@ export function Spaceships() {
     setIsLoading(true);
     try {
       const { data } = await api.get(url);
-      setSelectSpaceshipData(data);
+      setSelectSpaceshipData(data); 
     } catch (error) {
       console.error(error)
     } finally {
@@ -54,7 +55,7 @@ export function Spaceships() {
   return (
     <Container>
       <BoxBorder>
-        {
+        {isLoading ? (<LoadingIcons.Bars />) : (
           spaceshipData.map((spaceship) => {
             return (
               <div className='col-11 col-md-6 col-lg-3 mx-0 mb-4'>
@@ -71,13 +72,13 @@ export function Spaceships() {
               </div>
             )
           })
-        }
+        )}
 
         <Modal  show={isModalVisible} onHide={handleClose}>
-          <Modal.Header className={styles.modal} closeButton>
+          <Modal.Header  closeButton>
             <Modal.Title>Detalhes</Modal.Title>
           </Modal.Header>
-          <Modal.Body className={styles.modalBody}>
+          <Modal.Body>
             {isLoading ? ('loading') : (
               <div>
                 <div className='d-flex flex-row'>

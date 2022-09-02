@@ -35,7 +35,7 @@ export function SignIn() {
 
   return (
     <Container>
-      <Label>SISTEMA DE LOGIN</Label>
+      <Label>Faça seu login</Label>
       <Content>
         <Input
           type="email"

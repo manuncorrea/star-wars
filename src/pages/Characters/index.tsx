@@ -3,6 +3,7 @@ import { Button, Card, Container, Modal } from 'react-bootstrap';
 import { BoxBorder } from '../../components/BoxBorder';
 import { CharactersProps } from '../../utils/types';
 import { api } from '../../services/api';
+import LoadingIcons from 'react-loading-icons'
 
 export function Characters() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -37,7 +38,7 @@ export function Characters() {
       setSelectedCharacterData(data);
     } catch (error) {
       console.error(error);
-    }finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -51,7 +52,7 @@ export function Characters() {
   return (
     <Container>
       <BoxBorder>
-        {
+        {isLoading ? (<LoadingIcons.Bars />) : (
           charactersData.map((characters) => {
             return (
               <div className='col-11 col-md-6 col-lg-3 mx-0 mb-4'>
@@ -64,14 +65,14 @@ export function Characters() {
               </div>
             )
           })
-        }
+        )}
 
         <Modal show={isModalVisible} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Detalhes</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {isLoading ? ('loading') : (
+            {isLoading ? (<LoadingIcons.Bars />) : (
               <div>
                 <div className='d-flex flex-row'>
                   <h5>Nome:</h5>
@@ -80,28 +81,26 @@ export function Characters() {
                 <div className='d-flex flex-row'>
                   <h5>Cor do cabelo: </h5>
                   <span>
-                    {selectedCharacterData?.hair_color ? 
+                    {selectedCharacterData?.hair_color ?
                       selectedCharacterData?.hair_color : ''}
                   </span>
                 </div>
                 <div className='d-flex flex-row'>
                   <h5>Cor da pele: </h5>
                   <span>
-                  {selectedCharacterData?.skin_color ? 
-                    selectedCharacterData?.skin_color : ''}
+                    {selectedCharacterData?.skin_color ?
+                      selectedCharacterData?.skin_color : ''}
                   </span>
                 </div>
                 <div className='d-flex flex-row'>
                   <h5>Sexo: </h5>
                   <span>
 
-                  {selectedCharacterData?.gender ? 
-                    selectedCharacterData?.gender : ''}
+                    {selectedCharacterData?.gender ?
+                      selectedCharacterData?.gender : ''}
                   </span>
                 </div>
               </div>
-
-              
             )}
           </Modal.Body>
         </Modal>

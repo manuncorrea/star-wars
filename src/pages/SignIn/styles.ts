@@ -26,7 +26,7 @@ export const Content = styled.div`
 export const Label = styled.label`
   font-size: 1.125rem;
   font-weight: 600;
-  color: #676767;
+  color: #686868;
 `;
 
 export const LabelSignup = styled.label`

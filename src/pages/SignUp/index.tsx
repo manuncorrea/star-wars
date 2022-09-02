@@ -37,7 +37,7 @@ export function SignUp() {
   };
   return (
     <Container>
-      <Label>SISTEMA DE LOGIN</Label>
+      <Label>Cadastra-se</Label>
       <Content>
         <Input
           type="email"
@@ -62,7 +62,7 @@ export function SignUp() {
         <LabelSignup>
           Já tem uma conta?
           <Strong>
-            <Link to="/login">&nbsp;Entre</Link>
+            <Link to="/login">&nbsp;Entrar</Link>
           </Strong>
         </LabelSignup>
       </Content>

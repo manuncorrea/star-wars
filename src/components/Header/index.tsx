@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { Link } from "react-router-dom";
-import { Button, Container, Modal, Nav, Navbar, NavItem } from "react-bootstrap";
+import { Button, Container, Nav, Navbar, NavItem } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logoImg from '../../assets/logo.svg';
 import { Logout } from "../Logout";
