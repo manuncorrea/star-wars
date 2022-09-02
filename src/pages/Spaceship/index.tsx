@@ -16,6 +16,9 @@ export function Spaceships() {
     [] as Array<SpaceshipProps>
   );
 
+  //@ts-ignore 
+  const { signed } = useAuth()
+
   useEffect(() => {
     handleSpaceship();
   });
@@ -66,7 +69,7 @@ export function Spaceships() {
                   }}>
                   <Card.Body>
                     <Card.Title style={{ color: '#ffffff8c', fontWeight: 'bold', fontFamily: 'Inter' }}>{spaceship.name}</Card.Title>
-                    <Button  onClick={() => handleOpenModal(spaceship.url)} variant='warning' disabled>Detalhes</Button>
+                    <Button  onClick={() => handleOpenModal(spaceship.url)} variant='warning' disabled={signed === false}>Detalhes</Button>
                   </Card.Body>
                 </Card>
               </div>

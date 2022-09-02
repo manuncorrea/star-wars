@@ -4,8 +4,12 @@ import { BoxBorder } from '../../components/BoxBorder';
 import { CharactersProps } from '../../utils/types';
 import { api } from '../../services/api';
 import LoadingIcons from 'react-loading-icons'
+import useAuth from '../../hooks/useAuth';
 
 export function Characters() {
+  //@ts-ignore 
+  const { signed } = useAuth();
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -59,7 +63,7 @@ export function Characters() {
                 <Card style={{ width: '18rem', background: '#0e0c1a' }}>
                   <Card.Body>
                     <Card.Title style={{ color: '#ffffff8c', fontWeight: 'bold', fontFamily: 'Inter' }}>{characters.name}</Card.Title>
-                    <Button onClick={() => handleOpenModal(characters.url)} variant='warning'>Detalhes</Button>
+                    <Button onClick={() => handleOpenModal(characters.url)} variant='warning' disabled={signed === false}>Detalhes</Button>
                   </Card.Body>
                 </Card>
               </div>
