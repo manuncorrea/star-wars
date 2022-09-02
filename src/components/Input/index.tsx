@@ -1,13 +1,15 @@
-import { Col, Form } from 'react-bootstrap';
+import { InputContainer } from "./styles";
 
-export function Input({ ...rest }) {
+//@ts-ignore
+const Input = ({ type, placeholder, value, onChange }) => {
   return (
-    <>
-      <Form.Group className='mb-3' controlId='formPlaintextEmail'>
-        <Col xs='12'>
-          <Form.Control {...rest} />
-        </Col>
-      </Form.Group>
-    </>
-  )
-}
+    <InputContainer
+      value={value}
+      onChange={onChange}
+      type={type}
+      placeholder={placeholder}
+    />
+  );
+};
+
+export default Input;

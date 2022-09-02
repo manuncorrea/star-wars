@@ -1,21 +1,71 @@
-import { Button, Container, Form } from 'react-bootstrap';
-import { Input } from '../../components/Input';
+import { useState } from "react";
+import Input from "../../components/Input";
+import { Container, Content, Label, LabelError, LabelSignup, Strong } from "./styles";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { Button } from "../../components/Button";
 
 export function SignUp() {
+  const [email, setEmail] = useState("");
+  const [emailConf, setEmailConf] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  //@ts-ignore
+  const { signup } = useAuth();
+
+  const handleSignup = () => {
+    //@ts-ignore
+    if (!email | !emailConf | !senha) {
+      setError("Preencha todos os campos");
+      return;
+    } else if (email !== emailConf) {
+      setError("Os e-mails não são iguais");
+      return;
+    }
+
+    const res = signup(email, senha);
+
+    if (res) {
+      setError(res);
+      return;
+    }
+
+    alert("Usuário cadatrado com sucesso!");
+    navigate("/login");
+  };
   return (
     <Container>
-      <div className="row justify-content-center align-item-center vh-100">
-        <div className='col-auto row-auto'>
-          <Form>
-            <Input type='name' placeholder='Nome' />
-            <Input type='email' placeholder='E-mail' />
-            <Input type='password' placeholder='Senha' />
-            <Button variant='primary'>
-              Cadastrar
-            </Button>
-          </Form>
-        </div>
-      </div>
+      <Label>SISTEMA DE LOGIN</Label>
+      <Content>
+        <Input
+          type="email"
+          placeholder="Digite seu E-mail"
+          value={email}
+          onChange={(e: any) => [setEmail(e.target.value), setError("")]}
+        />
+        <Input
+          type="email"
+          placeholder="Confirme seu E-mail"
+          value={emailConf}
+          onChange={(e: any) => [setEmailConf(e.target.value), setError("")]}
+        />
+        <Input
+          type="password"
+          placeholder="Digite sua Senha"
+          value={senha}
+          onChange={(e: any) => [setSenha(e.target.value), setError("")]}
+        />
+        <LabelError>{error}</LabelError>
+        <Button onClick={handleSignup} >Cadastrar</Button>
+        <LabelSignup>
+          Já tem uma conta?
+          <Strong>
+            <Link to="/login">&nbsp;Entre</Link>
+          </Strong>
+        </LabelSignup>
+      </Content>
     </Container>
-  )
-}
+  );
+};

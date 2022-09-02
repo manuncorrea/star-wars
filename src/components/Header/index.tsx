@@ -6,12 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import logoImg from '../../assets/logo.svg';
 
 export function Header() {
-  const [isVisibleModal, setIsVisibleModal] = useState(false);
-
-  const handleClose = () => setIsVisibleModal(false);
-  const handleOpenModal = () => setIsVisibleModal(true);
-
-
   return (
     <>
       <Navbar style={{ background: '#0e0c1a', height: '5rem' }} variant="dark">
